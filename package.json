@@ -1,0 +1,16 @@
+{
+  "name": "@htmlacademy/criteria",
+  "version": "1.0.0",
+  "description": "This repository is about criterias from Advanced JavaScript course of [HTML Academy](https://htmlacademy.ru/intensive/ecmascript)",
+  "scripts": {
+    "test": "eslint --ext md . --fix"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "eslint": "4.2.0",
+    "eslint-config-htmlacademy": "0.3.0",
+    "eslint-plugin-markdown": "1.0.0-beta.6"
+  }
+}
