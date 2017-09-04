@@ -27,13 +27,76 @@
 - если циклов два и более, то можно не переиспользовать переменную `i`
 - `cb` для единственного коллбэка в параметрах функции
 
+### Названия констант (постоянных значений) написаны прописными (заглавными) буквами
+Слова разделяются подчеркиваниями (`UPPER_SNAKE_CASE`), например:
+ ```js
+ const MAX_HEIGHT = 400;
+ const EARTH_RADIUS = 6370;
+ ```
+ 
+### Конструкторы названы английскими существительными. Название конструкторов начинается с заглавной буквы
+Названия функций не являющихся конструкторами должны начинаться со строчной буквы
+
+Неправильно:
+```js
+const wizard = function (name, age) {
+ this.name = name;
+ this.age = age;
+};
+
+const Fly = function (coordinate) {
+ console.log('Смотрите я лечу!');
+};
+```
+
+Правильно:
+```js
+const Wizard = function (name, age) {
+ this.name = name;
+ this.age = age;
+};
+
+const fly = function (coordinate) {
+ console.log('Смотрите я лечу!');
+};
+```
+
+### Перечисления (`Enum`) названы английскими существительными и начинаются с прописной (заглавной) буквы
+Перечисления начинаются с прописной (заглавной) буквы. Значения перечислений обявлены как константы
+
+Неправильно:
+```js
+const view = {
+  artist: Artist,
+  genre: Genre,
+};
+
+const EndGameType = {
+  lives: `lives`,
+  quests: `quests`,
+};
+```
+
+Правильно:
+```js
+const View = {
+  ARTIST: Artist,
+  GENRE: Genre,
+};
+
+const EndGameType = {
+  LIVES: `lives`,
+  QUESTS: `quests`,
+};
+```
+ 
 ### Массивы названы существительными во множественном числе
 Неправильно:
 ```js
-var age = [12, 40, 22, 7];
-var name = ['Иван', 'Петр', 'Мария', 'Алексей'];
+const age = [12, 40, 22, 7];
+const name = ['Иван', 'Петр', 'Мария', 'Алексей'];
 
-var wizard = {
+const wizard = {
   name: 'Гендальф',
   friend: ['Саурон', 'Фродо', 'Бильбо']
 }
@@ -41,10 +104,10 @@ var wizard = {
 
 Правильно:
 ```js
-var ages = [12, 40, 22, 7];
-var names = ['Иван', 'Петр', 'Мария', 'Алексей'];
+const ages = [12, 40, 22, 7];
+const names = ['Иван', 'Петр', 'Мария', 'Алексей'];
 
-var wizard = {
+const wizard = {
   name: 'Гендальф',
   friends: ['Саурон', 'Фродо', 'Бильбо']
 }
@@ -59,80 +122,65 @@ var wizard = {
 
 Неправильно:
 ```js
-var function1 = function(names) {
-  names.forEach(function (name) {
+const function1 = (names) => {
+  names.forEach((name) => {
     console.log(name);
   });
 };
 
-var wizard = {
+const wizard = {
   name: 'Гендальф',
-  action: function () {
+  action() {
     console.log('Стреляю файрболлом!');
   }
 };
 
-var randomNumber = function() {
+const randomNumber = () => {
   return Math.random();
 }
 ```
 
 Правильно:
 ```js
-var printNames = function(names) {
-  names.forEach(function (name) {
+const printNames = (names) => {
+  names.forEach((name) => {
     console.log(name);
   });
 };
 
-var wizard = {
+const wizard = {
   name: 'Гендальф',
-  fire: function () {
+  fire() {
     console.log('Стреляю файрболлом!');
   }
 };
 
-var getRandomNumber = function() {
+const getRandomNumber = () => {
   return Math.random();
 }
 ```
 
-### Названия констант (постоянных значений) написаны прописными (заглавными) буквами
-Слова разделяются подчеркиваниями (`UPPER_SNAKE_CASE`), например:
- ```js
- var MAX_HEIGHT = 400;
- var EARTH_RADIUS = 6370;
- ```
+### Названия модулей записаны строчными (маленькими) буквами. Слова разделены дефисами
+Для того, чтобы избежать конфликтов имён в разных операционных системах, лучше применять наименее конфликтный способ именования файлов — строчными (маленькими) буквами через дефис
 
-### Конструкторы названы английскими существительными. Название конструкторов начинается с заглавной буквы
-Названия функций не являющихся конструкторами должны начинаться со строчной буквы
+
+## Форматирование и внешний вид
+
+### Все переменные объявлены как `let` или `const`
+Если значение переменной нигде не изменяется после объявления, то переменная должна быть объявлена как `const`, в противном случае `let`
 
 Неправильно:
 ```js
-var wizard = function (name, age) {
-  this.name = name;
-  this.age = age;
-};
-
-var Fly = function(coordinate) {
-  console.log('Смотрите я лечу!');
-};
+let level = getLevel(this.state.level, this.quest);
+let answerNames = Object.keys(level.answers);
+let answers = answerNames.map((key) => ({key, value: level.answers[key]}));
 ```
-
 Правильно:
 ```js
-var Wizard = function (name, age) {
-  this.name = name;
-  this.age = age;
-};
-
-var fly = function(coordinate) {
-  console.log('Смотрите я лечу!');
-};
+const level = getLevel(this.state.level, this.quest);
+const answerNames = Object.keys(level.answers);
+const answers = answerNames.map((key) => ({key, value: level.answers[key]}));
 ```
- 
-
-## Форматирование и внешний вид
 
 ### Используются обязательные блоки кода
 В любых конструкциях, где подразумевается использование блока кода (фигурных скобок), таких как `for`, `while`, `if`, `switch`, `function` — блок кода используется обязательно, даже если инструкция состоит из одной строчки
@@ -149,16 +197,40 @@ if (x % 2 === 1) {
 }
 ```
 
+Исключения составляют однострочные стрелочные функции, которые можно использовать без обязательныз блоков кода:
+```js
+const checkedCheckBoxes = checkboxes.filter((checkbox) => checkbox.checked);
+```
+
 ### Список констант идёт перед основным кодом
 Все константы выносятся в начало модуля/файла
 
-### Код соответствует гайдлайнам (ESLint)
+### Код соответствует гайдлайнам <img src="https://eslint.org/img/logo.svg" width="24" alt="ESLint"/>
 - Отступы между операторами и ключевым словами соответствуют стайлгайду.
 - Для отступов используются одинаковые символы, вложенность кода обозначается отступами.
 - Однообразно расставлены пробелы перед, после и внутри скобок, операторов и ключевых слов
 
 ---
 Не возникает ошибок при проверке проекта ESLint: `npm i && npm test`
+
+### Сложные составные константы собираются в перечисления `Enum`
+Множества однотипных констант собираются в перечисления.
+
+Неправильно:
+```js
+const EARTH_WEIGHT = 5.972 * Math.pow(10, 24);
+const EARTH_GRAVITY = 9.8;
+const EARTH_RADIUS = 6370;
+```
+
+Правильно:
+```js
+const Earth = {
+  WEIGHT: 5.972 * Math.pow(10, 24),
+  GRAVITY: 9.8,
+  RADIUS: 6370
+};
+```
 
 
 ## Мусор
@@ -172,7 +244,7 @@ if (x % 2 === 1) {
 Например:
 - Невыполнимые условия:
 ```js
-var happen = false;
+const happen = false;
 if (happen) {
   console.log('This will not happen anyway!');
 }
@@ -187,19 +259,19 @@ console.log('This will not happen!');
 
 ## Корректность
 
-### Константы нигде в коде не переопределяются
-Константы используются только для чтения, и никогда не переопределяются на всем промежутке жизни программы
+### Константы и перечисления нигде в коде не переопределяются
+Константы и перечисления (`enum`) используются только для чтения, и никогда не переопределяются на всем промежутке жизни программы
 
-### Включен строгий режим (ESLint)
+### Включен строгий режим <img src="https://eslint.org/img/logo.svg" width="24" alt="ESLint"/>
 В коде запрещены небезопасные конструкции. Код работает в [строгом режиме](https://developer.mozilla.org/ru/docs/Web/JavaScript/Reference/Strict_mode). В начале js-файлов установлена директива `'use strict';`
 
-### Используются строгие сравнения вместо нестрогих (ESLint)
+### Используются строгие сравнения вместо нестрогих <img src="https://eslint.org/img/logo.svg" width="24" alt="ESLint"/>
 Вместо операторов нестрогого сравнения `==` и `!=`, используются операторы строгого сравнения `===`, `!==`. [Таблицы истинности](http://dorey.github.io/JavaScript-Equality-Table/) для JavaScript
 
 Неправильно:
 ```js
-var foo = '';
-var bar = [];
+const foo = '';
+const bar = [];
 if (foo == bar) {
   destroy(world);
 }
@@ -207,8 +279,8 @@ if (foo == bar) {
 
 Правильно:
 ```js
-var foo = '';
-var bar = [];
+const foo = '';
+const bar = [];
 if (foo === bar) {
   destroy(world);
 }
@@ -218,67 +290,135 @@ if (foo === bar) {
 В названия переменных и свойств не включаются операторы и ключевые слова зарезервированные для будущих версий языка (например, `class`, `extends`).
 Список всех зарезервированных слов можно найти [тут](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Lexical_grammar#Keywords)   
 
+### Шаблоны созданные в коде программы корректны
+HTML-страница должна быть корректным **W3C** документом в любой момент работы программы. Т.о. шаблоны не должны конструировать некорректные HTML-фрагменты
 
-## Модульность
-
-### Все скрипты подключаются через файл `index.html`
-Файлы скриптов подключаются перед закрывающимся тегом `</body>`, атрибуты `async` и `defer` не используются
-
-### Все файлы JS представляют собой отдельные модули в [IIFE](https://google.com/iife) 
-Экспорт значений производится через глобальную область видимости. Код вне модуля запрещен. Вне модуля могут распологаться комментарии и утилитные инструкции, такие как `'use strict';`
-
-Пример правильного модуля:
-```js
-'use strict';
-(function (){
-window.load = function (url, onLoad) {
-  var xhr = new XMLHttpRequest();
-  xhr.addEventListener('load', onLoad);
-
-  xhr.responseType = 'json';
-  xhr.open('GET', url);
-  xhr.send();
-};
-})();
+Неправильно:
+```html
+<div class="player-wrapper" src="${answer.src}"></div>
 ```
 
-### Все значения, используемые только внутри модулей ограничены по видимости
-Из модуля ничего не должно попадать случайными образом в глобальную область видимости
+Правильно:
+```html
+<div class="player-wrapper" data-src="${answer.src}"></div>
+```
+
+### API встроенных функций и объектов используется правильно
+Передаются корректные значения, которые ожидаются по спецификации
 
 Неправильно:
 ```js
-'use strict';
+var isPressed = element.getAttribute('aria-pressed', false);
+```
+Правильно:
+```js
+var isPressed = element.getAttribute('aria-pressed');
+```
+Встроенные методы массивов используются по назаначению.
 
-var ENTER_KEYCODE = 13;
-  
-(function () {
-  
-  var userIcon = document.querySelector('.user');
- 
-  userIcon.addEventListener('keydown', function (evt) {
-    if (evt.keyCode === ENTER_KEYCODE) {
-      popup.classList.remove('hidden');
-    }
-  });
-})();
+Неправильно:
+```js
+var greet = 'Привет ';
+
+wizards.map(function (it) {
+  greet += ', ' + it.name;
+});
+
+console.log(greet + '!');
+```
+Правильно:
+```js
+var greet = 'Привет ';
+
+var names = wizards.map(function (it) {
+  return it.name;
+});
+
+console.log(greet + names.join(', ') + '!');
+```
+
+### Отсутствуют потенциально некорректные операции
+Например некорректное сложение двух операндов как строк. Проблема приоритета конкатенации над сложением. 
+
+Неправильно:
+```js
+new Date() + 1000;
 ```
 
 Правильно:
 ```js
-'use strict';
-
-(function () {
-  var ENTER_KEYCODE = 13;
-  
-  var userIcon = document.querySelector('.user');
- 
-  userIcon.addEventListener('keydown', function (evt) {
-    if (evt.keyCode === ENTER_KEYCODE) {
-      popup.classList.remove('hidden');
-    }
-  });
-})();
++new Date() + 1000;
 ```
+Некорректные проверки на существование с числами. 
+Пример некорректной проверки на то, что переменная является числом:
+```js
+var double = function (value) {
+  if(!value) {
+    return NaN;
+  }
+  
+  return value * 2;
+};
+
+double(0);
+double();
+double(5);
+```
+
+Потенциально некорректная операция взятия целой части числа
+
+Неправильно:
+```js
+const minutesNumber = ~~(seconds / 60);
+```
+
+Правильно:
+```js
+const minutesNumber = Math.trunc(seconds / 60);
+```
+
+
+## Модульность
+
+### Все файлы JS представляют собой отдельные модули [ES2015](http://exploringjs.com/es6/ch_modules.html)
+Экспорт и иморт значений производится через при помощи ключевых слов `export` и `import`. Сохранение в глобальную область видимости значений недопускается
+
+Пример правильного модуля:
+```js
+import {changeView} from '../util';
+import WelcomeView from './welcome-view';
+import App from '../main';
+
+
+export default class Welcome {
+  constructor() {
+    this.view = new WelcomeView();
+  }
+
+  init() {
+    changeView(this.view);
+
+    this.view.onStart = () => {
+      App.showGame();
+    };
+  }
+}
+```
+
+### Модули не экспортируют изменяющиеся переменные
+Модуль не должен экспортировать переменную значение которой может измениться в будущем
+Неправильно:
+```js
+export let latestResult;
+```
+
+Правильно:
+```js
+export const latestResult = loadLatestResult();
+```
+
+### Модули названы единообразно
+Имя модуля должно соотвествовать его содержимому. Например, если в модуле лежит класс `GameView`, то и имя модуля должно быть `game-view.js`
 
 
 ## Универсальность
@@ -321,10 +461,23 @@ apartments.forEach(function (it, index) {
 ```
 
 Правильно:
-```javascript
-for (var i = 0; i < Math.min(apartments.length, 3); i++) {
+```js
+for (let i = 0; i < Math.min(apartments.length, 3); i++) {
   render(apartments[i]);
 }
+```
+
+### Внутри шаблонов-строк (template literals) не используется конкатенация строк
+Конкатенация строк в шаблонных строках является антипаттерном, т.к. ухудшает чиатемость шаблонной строки
+
+Неправильно:
+```js
+const page = `${header + `\n` + main + `\n` + footer}`;
+```
+
+Правильно:
+```js
+const page = `${header}\n${main}\n${footer}`;
 ```
 
 ### Количество вызовов циклов минимизировано
@@ -519,70 +672,6 @@ var sidebarClassName = sidebarElement.className;
 ```
 
 
-## Корректность
-
-### API встроенных функций и объектов используется правильно
-Передаются корректные значения, которые ожидаются по спецификации
-
-Неправильно:
-```js
-var isPressed = element.getAttribute('aria-pressed', false);
-```
-Правильно:
-```js
-var isPressed = element.getAttribute('aria-pressed');
-```
-Встроенные методы массивов используются по назаначению.
-
-Неправильно:
-```js
-var greet = 'Привет ';
-
-wizards.map(function (it) {
-  greet += ', ' + it.name;
-});
-
-console.log(greet + '!');
-```
-Правильно:
-```js
-var greet = 'Привет ';
-
-var names = wizards.map(function (it) {
-  return it.name;
-});
-
-console.log(greet + names.join(', ') + '!');
-```
-
-### Отсутствуют потенциально некорректные операции
-Например некорректное сложение двух операндов как строк. Проблема приоритета конкатенации над сложением. 
-
-Неправильно:
-```js
-new Date() + 1000;
-```
-Правильно:
-```js
-+new Date() + 1000;
-```
-Некорректные проверки на существование с числами. 
-Пример некорректной проверки на то, что переменная является числом:
-```js
-var double = function (value) {
-  if(!value) {
-    return NaN;
-  }
-  
-  return value * 2;
-};
-
-double(0);
-double();
-double(5);
-```
-
-
 ## Модульность
 
 ### В случае, если одинаковый код повторяется в нескольких модулях, повторяющаяся часть вынесена в отдельный модуль
@@ -608,7 +697,7 @@ double(5);
   }
 })();
 ```
-**Не стоит выносить в отдельный модуль одну повторяющуюся интсрукцию**:
+**Не стоит выносить в отдельный модуль одну повторяющуюся инструкцию**:
 ```js
 // Файл hide-gallery.js
 'use strict';
