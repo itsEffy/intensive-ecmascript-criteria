@@ -400,7 +400,7 @@ new Date() + 1000;
 Некорректные проверки на существование с числами. 
 Пример некорректной проверки на то, что переменная является числом:
 ```js
-const double = function (value) {
+const double = (value) => {
   if (!value) {
     return NaN;
   }
@@ -492,7 +492,7 @@ IE не поддерживается, только Edge.
 ```js
 const elem = document.querySelector(`.test`);
 
-const onElemClick = function () {
+const onElemClick = () => {
   event.target.innerText = `you really need event`;
 };
 
@@ -504,7 +504,7 @@ elem.addEventListener(`click`, oneElemClick);
 ### Своевременный выход из цикла: цикл не работает дольше чем нужно
 Неправильно:
 ```js
-apartments.forEach(function (it, index) {
+apartments.forEach((it, index) => {
   if (index < 3) {
     render(it);
   }
@@ -815,7 +815,7 @@ class App {
 
 Неправильно:
 ```js
-const isPositiveNumber = function (myNumber) {
+const isPositiveNumber = (myNumber) => {
   if (typeof myNumber === `undefined`) {
     throw new Error(`Parameter is not defined`);
   }
@@ -828,7 +828,7 @@ isPositiveNumber(-30);
 
 Правильно:
 ```js
-const isPositiveNumber = function (myNumber) {
+const isPositiveNumber = (myNumber) => {
   return myNumber > 0;
 };
 
@@ -1025,7 +1025,7 @@ for (let i = 0; i < Math.min(apartments.length, 3); i++) {
 ```js
 const imageContainer = document.querySelector(`.image-container`);
 
-const changeFilter = function (filterName) {
+const changeFilter = (filterName) => {
   imageContainer.classList.remove(`filter-chrome`, `filter-sepia`, `filter-marvin`, `filter-phobos`, `filter-heat`);
   imageContainer.classList.add(filterName);
 };
@@ -1036,7 +1036,7 @@ const changeFilter = function (filterName) {
 const imageContainer = document.querySelector(`.image-container`);
 
 let currentFilter;
-const changeFilter = function (filterName) {
+const changeFilter = (filterName) => {
   if (currentFilter) {
     imageContainer.classList.remove(currentFilter);
   }
