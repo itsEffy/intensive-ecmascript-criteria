@@ -34,31 +34,39 @@
  const EARTH_RADIUS = 6370;
  ```
  
-### Конструкторы названы английскими существительными. Название конструкторов начинается с заглавной буквы
+### Классы названы английскими существительными. Название класса начинается с заглавной буквы
 Названия функций не являющихся конструкторами должны начинаться со строчной буквы
 
 Неправильно:
 ```js
-const wizard = function (name, age) {
- this.name = name;
- this.age = age;
-};
+class wizard {
+  constructor(name, age) {
+    this.name = name;
+    this.age = age;
+  }
+}
 
-const Fly = function (coordinate) {
- console.log('Смотрите я лечу!');
-};
+class Run {
+  constructor() {
+    console.log(`О, я бегу!`);
+  }
+}
 ```
 
 Правильно:
 ```js
-const Wizard = function (name, age) {
- this.name = name;
- this.age = age;
-};
+class Wizard {
+  constructor(name, age) {
+    this.name = name;
+    this.age = age;
+  }
+}
 
-const fly = function (coordinate) {
- console.log('Смотрите я лечу!');
-};
+class Runner {
+  constructor() {
+    console.log(`О, я бегун!`);
+  }
+}
 ```
 
 ### Перечисления (`Enum`) названы английскими существительными и начинаются с прописной (заглавной) буквы
@@ -94,23 +102,23 @@ const EndGameType = {
 Неправильно:
 ```js
 const age = [12, 40, 22, 7];
-const name = ['Иван', 'Петр', 'Мария', 'Алексей'];
+const name = [`Иван`, `Петр`, `Мария`, `Алексей`];
 
 const wizard = {
-  name: 'Гендальф',
-  friend: ['Саурон', 'Фродо', 'Бильбо']
-}
+  name: `Гендальф`,
+  friend: [`Саурон`, `Фродо`, `Бильбо`]
+};
 ```
 
 Правильно:
 ```js
 const ages = [12, 40, 22, 7];
-const names = ['Иван', 'Петр', 'Мария', 'Алексей'];
+const names = [`Иван`, `Петр`, `Мария`, `Алексей`];
 
 const wizard = {
-  name: 'Гендальф',
-  friends: ['Саурон', 'Фродо', 'Бильбо']
-}
+  name: `Гендальф`,
+  friends: [`Саурон`, `Фродо`, `Бильбо`]
+};
 ```
 
 ### Название функции или метода содержит глагол
@@ -129,15 +137,15 @@ const function1 = (names) => {
 };
 
 const wizard = {
-  name: 'Гендальф',
+  name: `Гендальф`,
   action() {
-    console.log('Стреляю файрболлом!');
+    console.log(`Стреляю файрболлом!`);
   }
 };
 
 const randomNumber = () => {
   return Math.random();
-}
+};
 ```
 
 Правильно:
@@ -149,15 +157,15 @@ const printNames = (names) => {
 };
 
 const wizard = {
-  name: 'Гендальф',
+  name: `Гендальф`,
   fire() {
-    console.log('Стреляю файрболлом!');
+    console.log(`Стреляю файрболлом!`);
   }
 };
 
 const getRandomNumber = () => {
   return Math.random();
-}
+};
 ```
 
 ### Названия модулей записаны строчными (маленькими) буквами. Слова разделены дефисами
@@ -201,14 +209,18 @@ const answers = answerNames.map((key) => ({key, value: level.answers[key]}));
 
 Неправильно:
 ```js
-if (x % 2 === 1) return;
+(() => {
+  if (x % 2 === 1) return;
+})();
 ```
 
 Правильно:
 ```js
-if (x % 2 === 1) {
-  return;
-}
+(() => {
+  if (x % 2 === 1) {
+    return;
+  }
+})();
 ```
 
 Исключения составляют однострочные стрелочные функции, которые можно использовать без обязательныз блоков кода:
@@ -284,14 +296,16 @@ for (const level of levels) {
 ```js
 const happen = false;
 if (happen) {
-  console.log('This will not happen anyway!');
+  console.log(`This will not happen anyway!`);
 }
 ```
 
-- Операции после выхода из функции:
+- Операции после выхода из функции <img src="https://eslint.org/img/logo.svg" width="16" alt="ESLint"/>: 
 ```js
-return;
-console.log('This will not happen!');
+(() => {
+  return;
+  console.log(`This will not happen!`);
+})();
 ```
 
 
@@ -300,15 +314,13 @@ console.log('This will not happen!');
 ### Константы и перечисления нигде в коде не переопределяются
 Константы и перечисления (`enum`) используются только для чтения, и никогда не переопределяются на всем промежутке жизни программы
 
-### Включен строгий режим <img src="https://eslint.org/img/logo.svg" width="24" alt="ESLint"/>
-В коде запрещены небезопасные конструкции. Код работает в [строгом режиме](https://developer.mozilla.org/ru/docs/Web/JavaScript/Reference/Strict_mode). В начале js-файлов установлена директива `'use strict';`
 
 ### Используются строгие сравнения вместо нестрогих <img src="https://eslint.org/img/logo.svg" width="24" alt="ESLint"/>
 Вместо операторов нестрогого сравнения `==` и `!=`, используются операторы строгого сравнения `===`, `!==`. [Таблицы истинности](http://dorey.github.io/JavaScript-Equality-Table/) для JavaScript
 
 Неправильно:
 ```js
-const foo = '';
+const foo = ``;
 const bar = [];
 if (foo == bar) {
   destroy(world);
@@ -317,7 +329,7 @@ if (foo == bar) {
 
 Правильно:
 ```js
-const foo = '';
+const foo = ``;
 const bar = [];
 if (foo === bar) {
   destroy(world);
@@ -346,33 +358,31 @@ HTML-страница должна быть корректным **W3C** док�
 
 Неправильно:
 ```js
-var isPressed = element.getAttribute('aria-pressed', false);
+const isPressed = element.getAttribute(`aria-pressed`, false);
 ```
 Правильно:
 ```js
-var isPressed = element.getAttribute('aria-pressed');
+const isPressed = element.getAttribute(`aria-pressed`);
 ```
 Встроенные методы массивов используются по назаначению.
 
 Неправильно:
 ```js
-var greet = 'Привет ';
+let greet = `Привет `;
 
-wizards.map(function (it) {
-  greet += ', ' + it.name;
+wizards.map((it) => {
+  greet += `, ${it.name}`;
 });
 
-console.log(greet + '!');
+console.log(`${greet}!`);
 ```
 Правильно:
 ```js
-var greet = 'Привет ';
+const greet = `Привет `;
 
-var names = wizards.map(function (it) {
-  return it.name;
-});
+const names = wizards.map((it) => it.name);
 
-console.log(greet + names.join(', ') + '!');
+console.log(`${greet} ${names.join(`, `)}!`);
 ```
 
 ### Отсутствуют потенциально некорректные операции
@@ -390,11 +400,11 @@ new Date() + 1000;
 Некорректные проверки на существование с числами. 
 Пример некорректной проверки на то, что переменная является числом:
 ```js
-var double = function (value) {
-  if(!value) {
+const double = function (value) {
+  if (!value) {
     return NaN;
   }
-  
+
   return value * 2;
 };
 
@@ -480,13 +490,13 @@ IE не поддерживается, только Edge.
 ### Нельзя пользоваться глобальной переменной `event`
 Приводит к неосознанному коду:
 ```js
-var elem = document.querySelector('.test');
+const elem = document.querySelector(`.test`);
 
-var onElemClick = function () {
-  event.target.innerText = 'you really need event';
+const onElemClick = function () {
+  event.target.innerText = `you really need event`;
 };
 
-elem.addEventListener('click', oneElemClick);
+elem.addEventListener(`click`, oneElemClick);
 ```
 
 ## Оптимальность
@@ -526,18 +536,14 @@ const page = `${header}\n${main}\n${footer}`;
 
 Неправильно:
 ```js
-var wizardNames = source.map(function (it) {
-    return it.wizard;
-  }).map(function (it) {
-    return it.name; 
-  });
+const wizardNames = source.
+    map((it) => it.wizard).
+    map((it) => it.name);
 ```
 
 Правильно:
 ```js
-var wizardNames = source.map(function (it) {
-    return it.wizard.name;
-  });
+const wizardNames = source.map((it) => it.wizard.name);
 ```
 
 ### Множественные DOM-операции производятся на элементах, которые не добавлены в DOM 
@@ -569,33 +575,47 @@ var wizardNames = source.map(function (it) {
 
 Неправильно:
 ```js
-var keks = {
-  name: 'Кекс'
-}
+const keks = {
+  name: `Кекс`
+};
 ```
 
 Правильно:
 ```js
-var cat = {
-  name: 'Кекс'
-}
+const cat = {
+  name: `Кекс`
+};
 ```
 
 ### Название методов и свойств объектов не содержит название объектов 
 Неправильно:
 ```js
-popup.openPopup = function() {
-  console.log('I will open popup');
+const popup = {
+  openPopup() {
+    console.log(`I will open popup`);
+  }
 };
-wizard.wizardName = 'Пендальф';
+
+class Wizard {
+  constructor(name = `Пендальф`) {
+    this.wizardName = name;
+  }
+}
 ```
 
 Правильно
 ```js
-popup.open = function() {
-  console.log('I will open popup');
+const popup = {
+  open() {
+    console.log(`I will open popup`);
+  }
 };
-wizard.name = 'Пендальф';
+
+class Wizard {
+  constructor(name = `Пендальф`) {
+    this.name = name;
+  }
+}
 ```
 
 ### Из названия обработчика события и функции-коллбэка следует, что это за обработчик
@@ -603,18 +623,18 @@ wizard.name = 'Пендальф';
  - `on` + (на каком элементе) + что случилось:
  
 ```js
- var onSidebarClick;
- var onContentLoad;
- 
- var onResize;
+const onSidebarClick = () => {};
+const onContentLoad = () => {};
+
+const onResize = () => {};
 ```
  - (на каком элементе) + что случилось + `Handler`:
  
 ```js
- var sidebarClickHandler;
- var contentLoadHandler;
- 
- var resizeHandler;
+const sidebarClickHandler = () => {};
+const contentLoadHandler = () => {};
+
+const resizeHandler = () => {};
 ```
 
 
@@ -637,7 +657,7 @@ const GOD = {
   createWorld() {
     return `Your world is ready!`;
   }
-}
+};
 ```
 
 Конструктор
@@ -657,16 +677,16 @@ class Planet {
 
 Неправильно:
 ```js
-var popupMainElement = document.querySelector('.popup');
-var sidebarNode = document.querySelector('.sidebar');
-var similarContainer = popupMainElement.querySelector('ul.similar');
+const popupMainElement = document.querySelector(`.popup`);
+const sidebarNode = document.querySelector(`.sidebar`);
+const similarContainer = popupMainElement.querySelector(`ul.similar`);
 ```
 
 Правильно:
 ```js
-var popupMainElement = document.querySelector('.popup');
-var sidebarElement = document.querySelector('.sidebar');
-var similarContainerElement = popupMainElement.querySelector('ul.similar');
+const popupMainElement = document.querySelector(`.popup`);
+const sidebarElement = document.querySelector(`.sidebar`);
+const similarContainerElement = popupMainElement.querySelector(`ul.similar`);
 ```
 
 ### При использовании встроенного API, который поддерживает несколько вариантов использования, используется один способ
@@ -674,35 +694,35 @@ var similarContainerElement = popupMainElement.querySelector('ul.similar');
 
 Неправильно:
 ```js
-var popupMainElement = document.querySelector('#popup');
-var sidebarElement = document.getElementById('sidebar');
+const popupMainElement = document.querySelector(`#popup`);
+const sidebarElement = document.getElementById(`sidebar`);
 
-var popupClassName = popupMainElement.getAttribute('class');
-var sidebarClassName = sidebarElement.className;
+const popupClassName = popupMainElement.getAttribute(`class`);
+const sidebarClassName = sidebarElement.className;
 ```
 
 Правильно:
 ```js
-var popupMainElement = document.querySelector('#popup');
-var sidebarElement = document.querySelector('#sidebar');
+const popupMainElement = document.querySelector(`#popup`);
+const sidebarElement = document.querySelector(`#sidebar`);
 ```
 
 ```js
-var popupClassName = popupMainElement.getAttribute('class');
-var sidebarClassName = sidebarElement.getAttribute('class');
+const popupClassName = popupMainElement.getAttribute(`class`);
+const sidebarClassName = sidebarElement.getAttribute(`class`);
 
 ```
 
 или
 
 ```js
-var popupMainElement = document.getElementById('popup');
-var sidebarElement = document.getElementById('sidebar');
+const popupMainElement = document.getElementById(`popup`);
+const sidebarElement = document.getElementById(`sidebar`);
 ```
 
 ```js
-var popupClassName = popupMainElement.className;
-var sidebarClassName = sidebarElement.className;
+const popupClassName = popupMainElement.className;
+const sidebarClassName = sidebarElement.className;
 
 ```
 
@@ -795,9 +815,9 @@ class App {
 
 Неправильно:
 ```js
-var isPositiveNumber = function (myNumber) {
-  if (typeof myNumber === 'undefined') {
-    throw new Error('Parameter is not defined');
+const isPositiveNumber = function (myNumber) {
+  if (typeof myNumber === `undefined`) {
+    throw new Error(`Parameter is not defined`);
   }
   return myNumber > 0;
 };
@@ -808,7 +828,7 @@ isPositiveNumber(-30);
 
 Правильно:
 ```js
-var isPositiveNumber = function (myNumber) {
+const isPositiveNumber = function (myNumber) {
   return myNumber > 0;
 };
 
@@ -851,20 +871,24 @@ removeTimer();
 ### Если при использовании условного оператора в любом случае возвращается значение, альтернативная ветка опускается
 Неправильно:
 ```js
-if (2 > 1) {
-  return val;
-} else {
-  return anotherVal;
-}
+((val, anotherVal) => {
+  if (2 > 1) {
+    return val;
+  } else {
+    return anotherVal;
+  }
+});
 ```
 
 Правильно:
 ```js
-if (2 > 1) {
-  return val;
-}
+((val, anotherVal) => {
+  if (2 > 1) {
+    return val;
+  }
 
-return anotherVal;
+  return anotherVal;
+});
 ```
 
 ### Отсутствуют лишние приведения и проверки типов
@@ -873,30 +897,30 @@ return anotherVal;
 Неправильно:
 ```js
 if (booleanValue === true) {
-  console.log('It\'s true!');
+  console.log(`It\`s true!`);
 }
 ```
 
 Правильно:
 ```js
 if (booleanValue) {
-  console.log('It\'s true!');
+  console.log(`It\`s true!`);
 }
 ```
 
 ### Там где возможно, в присвоении значения вместо if используется тернарный оператор
 Неправильно:
 ```js
-var sex;
+let sex;
 if (male) { 
-  sex = 'Мужчина';
+  sex = `Мужчина`;
 } else { 
-  sex = 'Женщина';
+  sex = `Женщина`;
 }
 ```
 Правильно:
 ```js
-var sex = male ? 'Мужчина' : 'Женщина';
+const sex = male ? `Мужчина` : `Женщина`;
 ```
  
 ### Условия упрощены
@@ -904,15 +928,19 @@ var sex = male ? 'Мужчина' : 'Женщина';
 
 Неправильно:
 ```js
-if (firstValue === secondValue) {
-  return true;
-} else {
-  return false;
-}
+((firstValue, secondValue) => {
+  if (firstValue === secondValue) {
+    return true;
+  } else {
+    return false;
+  }
+});
 ```
 Правильно:
 ```js
-return firstValue === secondValue;
+((firstValue, secondValue) => {
+  return firstValue === secondValue;
+});
 ```
 
 
@@ -935,7 +963,7 @@ class Timer {
   }
   getTime() {
     const minutes = parseInt(document.querySelector(`.timer-value-mins`).textContent, 10);
-      const seconds = parseInt(document.querySelector(`.timer-value-secs`).textContent, 10);
+    const seconds = parseInt(document.querySelector(`.timer-value-secs`).textContent, 10);
   
     return {minutes, seconds};
   }
@@ -973,17 +1001,17 @@ class Timer {
 
 Неправильно:
 ```js
-for (var i = 0; i < Math.min(apartments.length, 3); i++) {
-  var dialog = document.querySelector('.dialog');
+for (let i = 0; i < Math.min(apartments.length, 3); i++) {
+  const dialog = document.querySelector(`.dialog`);
   render(dialog, apartments[i]);
 }
 ```
 
 Правильно:
 ```javascript
-var dialog = document.querySelector('.dialog');
+const dialog = document.querySelector(`.dialog`);
 
-for (var i = 0; i < Math.min(apartments.length, 3); i++) {
+for (let i = 0; i < Math.min(apartments.length, 3); i++) {
   render(dialog, apartments[i]);
 }
 ```
@@ -995,20 +1023,20 @@ for (var i = 0; i < Math.min(apartments.length, 3); i++) {
 
 Неправильно:
 ```js
-var imageContainer = document.querySelector('.image-container');
+const imageContainer = document.querySelector(`.image-container`);
 
-var changeFilter = function (filterName) {
-  imageContainer.classList.remove('filter-chrome', 'filter-sepia', 'filter-marvin', 'filter-phobos', 'filter-heat');
+const changeFilter = function (filterName) {
+  imageContainer.classList.remove(`filter-chrome`, `filter-sepia`, `filter-marvin`, `filter-phobos`, `filter-heat`);
   imageContainer.classList.add(filterName);
 };
 ```
 
 Правильно:
 ```js
-var imageContainer = document.querySelector('.image-container');
+const imageContainer = document.querySelector(`.image-container`);
 
-var currentFilter;
-var changeFilter = function (filterName) {
+let currentFilter;
+const changeFilter = function (filterName) {
   if (currentFilter) {
     imageContainer.classList.remove(currentFilter);
   }
@@ -1030,10 +1058,10 @@ var changeFilter = function (filterName) {
 
 Например:
 ```js
-elements.forEach(function (el) {
-  el.onclick = function () {
+elements.forEach((el) => {
+  el.onclick = () => {
     console.log(el);
-  }
+  };
 });
 ```
 

@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "description": "This repository is about criterias from Advanced JavaScript course of [HTML Academy](https://htmlacademy.ru/intensive/ecmascript)",
   "scripts": {
-    "test": "eslint --ext md . --fix"
+    "test": "eslint --ext md index.md"
   },
   "keywords": [],
   "author": "",
