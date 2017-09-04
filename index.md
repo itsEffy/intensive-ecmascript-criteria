@@ -232,6 +232,24 @@ const Earth = {
 };
 ```
 
+### Для итерирования по массивам и структурам данных по которомы можно итерироваться (**Iterable**) используется конструкция `for .. of`
+Там где не требуется индекс элемента массива или нужно обойти все элементы итерируемой структуры данных, используется цикл `for .. of` вместо цикла `for`
+
+Неправильно:
+```js
+for (let i = 0; i < levels.length; i++) {
+  const level = levels[i];
+  renderLevel(level);
+}
+```
+
+Правильно:
+```js
+for (const level of levels) {
+  renderLevel(level);
+}
+```
+
 
 ## Мусор
 
@@ -557,7 +575,7 @@ popup.open = function() {
 wizard.name = 'Пендальф';
 ```
 
-### Из названия обработчика события и функции-коллбэка следует, что это обработчик
+### Из названия обработчика события и функции-коллбэка следует, что это за обработчик
 Для единственного обработчика или функции можно использовать `callback` или `cb`. Для именования нескольких обработчиков внутри одного модуля используется `on` или `handler` и описание события. Название обработчика строится следующим образом:
  - `on` + (на каком элементе) + что случилось:
  
@@ -580,38 +598,32 @@ wizard.name = 'Пендальф';
 ## Единообразие
 
 ### Все функции объявлены единообразно
-Все функции создаются в едином стиле: используется либо [«функциональное выражение»](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/function), либо как [«функциональное объявление»](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/function). Смешение стилей в рамках проекта не допускается
+При объявлении функций используются только стрелочные функции. Для объявления методов объектов используется специальный синтаксис для методов. Для объявления классов используется ключевое слово `class`.
+ Смешение стилей в рамках проекта не допускается
 
-Неправильно:
+Функция:
 ```js
-var doSomethingElse = function () {
-    // function body
-};
-
-function doSomething() {
-  // function body
-}
-```
-
-Правильно:
-```js
-var doSomething = function () {
-    // function body
-};
-
-var doSomethingElse = function () {
-    // function body
+const getTheMeaningOfLive = () => {
+  return 42;
 };
 ```
 
-или
+Метод:
 ```js
-function doSomething() {
-  // function body
+const GOD = {
+  createWorld() {
+    return `Your world is ready!`;
+  }
 }
+```
 
-function doSomethingElse() {
-  // function body
+Конструктор
+```js
+class Planet {
+  constructor(weight, mass) {
+    this.weight = weight;
+    this.mass = mass;
+  }
 }
 ```
 
@@ -675,111 +687,69 @@ var sidebarClassName = sidebarElement.className;
 ## Модульность
 
 ### В случае, если одинаковый код повторяется в нескольких модулях, повторяющаяся часть вынесена в отдельный модуль
-Критерий касается структурных единиц кода — повторяющийся блок кода, либо функции с одним и теми же конструкциями, например, утилитные методы для проверки клавиш:
+Критерий касается структурных единиц кода — повторяющийся блок кода, либо функции с одним и теми же конструкциями, например, утилитные методы для работы с DOM:
 ```js
-// Файл keyboard.js
-'use strict';
+export const createElement = (template) => {
+  const outer = document.createElement(`div`);
+  outer.innerHTML = template;
+  return outer;
+};
 
-(function () {
-  var ENTER_KEYCODE = 13;
-  var ESC_KEYCODE = 27;
-  
-  window.keyboard = {
-    isKeyBoardEvent: function (evt) {
-      return evt instanceof KeyboardEvent;
-    },
-    isEnterPressed: function (evt) {
-      return evt.keyCode === ENTER_KEYCODE;
-    },
-    isEscPressed: function (evt) {
-      return evt.keyCode === ESC_KEYCODE;
-    }
-  }
-})();
+const main = document.getElementById(`main`);
+
+export const changeView = (view) => {
+  main.innerHTML = ``;
+  main.appendChild(view.element);
+};
 ```
 **Не стоит выносить в отдельный модуль одну повторяющуюся инструкцию**:
 ```js
-// Файл hide-gallery.js
-'use strict';
-
-(function () {
-  window.hideGallery = function (gallery) {
-    return gallery.classList.add('invisible');
-  }
-})();
-```
-
-### При экспорте из одного модуля нескольких значений используется пространство имен
-Множественные значения записываются в один объект. Имя объекта совпадает с именем файла без учета кейса.
-Неправильно:
-```js
-// Файл dialog-util.js
-'use strict';
-
-(function () {
-  var ENTER_KEYCODE = 13;
-  var ESC_KEYCODE = 27;
-  
-  window.isEnterPressed = function (evt) {
-    return evt.keyCode === ENTER_KEYCODE;
-  };
-  
-  window.isEscPressed = function (evt) {
-    return evt.keyCode === ESC_KEYCODE;
-  };
-})();
-```
-Правильно:
-```js
-// Файл dialog-util.js
-'use strict';
-
-(function () {
-  var ENTER_KEYCODE = 13;
-  var ESC_KEYCODE = 27;
-  
-  window.dialogUtil = {
-    isEnterPressed: function (evt) {
-      return evt.keyCode === ENTER_KEYCODE;
-    },
-    isEscPressed: function (evt) {
-      return evt.keyCode === ESC_KEYCODE;
-    }
-  }
-})();
-```
-
-### Во всех модулях для ограничения области видимости используются IIFE и только они
-Неправильно:
-```js
-'use strict';
-
-window.load = function (url, onLoad) {
-  var xhr = new XMLHttpRequest();
-  xhr.addEventListener('load', onLoad);
-
-  xhr.responseType = 'json';
-  xhr.open('GET', url);
-  xhr.send();
+export const createElement = (template) => {
+  const outer = document.createElement(`div`);
+  outer.innerHTML = template;
+  return outer;
 };
 ```
 
-Правильно:
+
+## Корректность
+
+### Методы, которые не используют поля класса объявлены как статические
+Если метод не использует поля класса в котором он объявлен, то этот метод должен быть объявлен как статический:
+
+Неправильно:
 ```js
-'use strict';
+class App {
+  showWelcome() {
+    location.hash = ControllerID.WELCOME;
+  }
 
-(function() {
-  window.load = function (url, onLoad) {
-    var xhr = new XMLHttpRequest();
-    xhr.addEventListener('load', onLoad);
+  showGame() {
+    location.hash = ControllerID.GAME;
+  }
 
-    xhr.responseType = 'json';
-    xhr.open('GET', url);
-    xhr.send();
-  };
-})();
+  showScores() {
+    location.hash = ControllerID.SCOREBOARD;
+  }
+}
 ```
 
+Правильно:
+```js
+class App {
+  static showWelcome() {
+    location.hash = ControllerID.WELCOME;
+  }
+
+  static showGame() {
+    location.hash = ControllerID.GAME;
+  }
+
+  static showScores() {
+    location.hash = ControllerID.SCOREBOARD;
+  }
+}
+```
 
 ## Избыточность
 
@@ -809,8 +779,37 @@ isPositiveNumber(15);
 isPositiveNumber(-30);
 ```
 
-### Отсутствует дублирование кода: повторяющиеся части кода переписаны как функции
+### Отсутствует дублирование кода: повторяющиеся части кода переписаны как функции или вынесены из условий
 При написании кода следует придерживаться принципа [DRY](https://ru.wikipedia.org/wiki/Don%E2%80%99t_repeat_yourself)
+
+Неправильно:
+```js
+if (this.level >= 10) {
+  this.timer.stopTimer();
+  this.timer.stopTimeout();
+  this.setResult();
+  removeTimer();
+} else if (this.lives <= 0) {
+  this.timer.stopTimer();
+  this.timer.stopTimeout();
+  app.showResultFail();
+  removeTimer();
+}
+```
+
+Правильно:
+```js
+this.timer.stopTimer();
+this.timer.stopTimeout();
+
+if (this.level >= 10) {
+  this.setResult();
+} else if (this.lives <= 0) {
+  app.showResultFail();
+}
+
+removeTimer();
+```
 
 ### Если при использовании условного оператора в любом случае возвращается значение, альтернативная ветка опускается
 Неправильно:
@@ -886,6 +885,50 @@ return firstValue === secondValue;
 
 
 ## Оптимальность
+
+### Значения не конвертируются в строку и обратно без необходимости
+Если состояние переменной можно сохранить в переменную или во внутренне свойство, то лучше использовать внутреннее состояни объекта, вместо сериализации из значения в строку и наоборот
+
+Неправильно:
+```js
+class Timer {
+  setTime({minutes, seconds}) {
+    document.querySelector(`.timer-value-mins`).textContent = minutes;
+    document.querySelector(`.timer-value-secs`).textContent = seconds;
+  }
+  getTime() {
+    const minutes = parseInt(document.querySelector(`.timer-value-mins`).textContent, 10);
+      const seconds = parseInt(document.querySelector(`.timer-value-secs`).textContent, 10);
+  
+    return {minutes, seconds};
+  }
+}
+```
+
+Правильно:
+```js
+class Timer {
+  constructor(time) {
+    this.minutesEl = document.querySelector(`.timer-value-mins`);
+    this.secondsEl = document.querySelector(`.timer-value-secs`);
+    this.time = time;
+  }
+  
+  update() {
+    this.minutesEl.textContent = this.time.minutes;
+    this.secondsEl.textContent = this.time.seconds;
+  }
+  
+  get time() {
+    return this.myTime;
+  }
+  
+  set time(time) {
+    this.myTime = time;
+    this.update();
+  }
+}
+```
 
 ### Константы, используемые внутри функций создаются вне функций и используются повторно через замыкания
 
@@ -967,4 +1010,47 @@ imgGenerate(picArray = JSON.parse(data));
 ```js
 picArray = JSON.parse(data);
 imgGenerate(picArray);
+```
+
+### Операции над DOM-элементами инкапуслированы
+Все операции над элементами DOM-дерева происходят только там, где эти элементы были созданы и не используются снаружи. Например, всё что связано с отрисовкой данных должно находиться внутри класса `View` и управляться только внутри этого класса, любой доступ к закрытым данным снаружи запрещён
+
+Неправильно:
+```js
+class PlayerController {
+  constructor(view) {
+    this.view = view;
+  }
+  
+  init() {
+    const checkboxes = Array.from(this.view.element.querySelectorAll(`input`));
+    
+    const answers = [];
+  
+    this.view.makeDecision = () => {  
+      answers.push(checkboxes.filter((it) => it.checked));
+      
+      if (answers.length > 0) {
+        goToNextScreen();
+      }
+    };
+  }
+}
+```
+
+Правильно:
+```js
+class PlayerController {
+  constructor(view) {
+    this.view = view;
+  }
+  
+  init() {
+    this.view.onAnswer = (answers) => {  
+      if (answers.length > 0) {
+        goToNextScreen();
+      }
+    };
+  }
+}
 ```
