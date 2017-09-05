@@ -7,8 +7,8 @@
 
 ## Задача
 
-### Код соответствует ТЗ проекта
-Все обязательные пункты ТЗ выполнены
+### Код соответствует техническом заданию проекта
+Все обязательные пункты технического задания выполнены
 
 ### При выполнении кода не возникает необработанных ошибок
 При открытии диалогов, загрузки данных и работе с сайтом не возникает ошибок, программа не ломается и не зависает
@@ -19,35 +19,106 @@
 ### Название переменных, параметров, свойств и методов начинается со строчной буквы и записываются в нотации [camelcase](https://ru.wikipedia.org/wiki/CamelCase) 
 
 ### Для названия значений используются английские существительные
-Сокращения в словах запрещены. Сокращенные названия переменных можно использовать только, если такое название широко распространено. Допустимые сокращения:
+Сокращения в словах запрещены. Сокращённые названия переменных можно использовать только, если такое название широко распространено. Допустимые сокращения:
 - `xhr`, для объектов `XMLHttpRequest`
 - `evt` для объектов `Event` и его производных (`MouseEvent`, `KeyboardEvent` и подобные)
 - `ctx` для контекста канваса
-- `i`, `j`, `k`, `l`, `t` для счетчика в цикле, `j` для счетчика во вложенном цикле и так далее по алфавиту
+- `i`, `j`, `k`, `l`, `t` для счётчика в цикле, `j` для счётчика во вложенном цикле и так далее по алфавиту
 - если циклов два и более, то можно не переиспользовать переменную `i`
 - `cb` для единственного коллбэка в параметрах функции
 
-### Массивы названы существительными во множественном числе
+### Названия констант (постоянных значений) написаны прописными (заглавными) буквами
+Слова разделяются подчёркиваниями (`UPPER_SNAKE_CASE`), например:
+ ```js
+ const MAX_HEIGHT = 400;
+ const EARTH_RADIUS = 6370;
+ ```
+ 
+### Классы названы английскими существительными. Название класса начинается с заглавной буквы
+Названия функций не являющихся конструкторами должны начинаться со строчной буквы
+
 Неправильно:
 ```js
-var age = [12, 40, 22, 7];
-var name = ['Иван', 'Петр', 'Мария', 'Алексей'];
+class wizard {
+  constructor(name, age) {
+    this.name = name;
+    this.age = age;
+  }
+}
 
-var wizard = {
-  name: 'Гендальф',
-  friend: ['Саурон', 'Фродо', 'Бильбо']
+class Run {
+  constructor() {
+    console.log(`О, я бегу!`);
+  }
 }
 ```
 
 Правильно:
 ```js
-var ages = [12, 40, 22, 7];
-var names = ['Иван', 'Петр', 'Мария', 'Алексей'];
-
-var wizard = {
-  name: 'Гендальф',
-  friends: ['Саурон', 'Фродо', 'Бильбо']
+class Wizard {
+  constructor(name, age) {
+    this.name = name;
+    this.age = age;
+  }
 }
+
+class Runner {
+  constructor() {
+    console.log(`О, я бегун!`);
+  }
+}
+```
+
+### Перечисления (`Enum`) названы английскими существительными и начинаются с прописной (заглавной) буквы
+Перечисления начинаются с прописной (заглавной) буквы. Перечисления названы существительными в единственном числе. Значения перечислений объявлены как константы
+
+Неправильно:
+```js
+const view = {
+  artist: Artist,
+  genre: Genre,
+};
+
+const EndGameType = {
+  lives: `lives`,
+  quests: `quests`,
+};
+```
+
+Правильно:
+```js
+const View = {
+  ARTIST: Artist,
+  GENRE: Genre,
+};
+
+const EndGameType = {
+  LIVES: `lives`,
+  QUESTS: `quests`,
+};
+```
+ 
+### Массивы названы существительными во множественном числе
+Неправильно:
+```js
+const age = [12, 40, 22, 7];
+const name = [`Иван`, `Петр`, `Мария`, `Алексей`];
+
+const wizard = {
+  name: `Гендальф`,
+  friend: [`Саурон`, `Фродо`, `Бильбо`]
+};
+```
+
+Правильно:
+```js
+const ages = [12, 40, 22, 7];
+const names = [`Иван`, `Петр`, `Мария`, `Алексей`];
+
+const wizard = {
+  name: `Гендальф`,
+  friends: [`Саурон`, `Фродо`, `Бильбо`]
+};
 ```
 
 ### Название функции или метода содержит глагол
@@ -59,100 +130,112 @@ var wizard = {
 
 Неправильно:
 ```js
-var function1 = function(names) {
-  names.forEach(function (name) {
+const function1 = (names) => {
+  names.forEach((name) => {
     console.log(name);
   });
 };
 
-var wizard = {
-  name: 'Гендальф',
-  action: function () {
-    console.log('Стреляю файрболлом!');
+const wizard = {
+  name: `Гендальф`,
+  action() {
+    console.log(`Стреляю файрболлом!`);
   }
 };
 
-var randomNumber = function() {
+const randomNumber = () => {
   return Math.random();
-}
+};
 ```
 
 Правильно:
 ```js
-var printNames = function(names) {
-  names.forEach(function (name) {
+const printNames = (names) => {
+  names.forEach((name) => {
     console.log(name);
   });
 };
 
-var wizard = {
-  name: 'Гендальф',
-  fire: function () {
-    console.log('Стреляю файрболлом!');
+const wizard = {
+  name: `Гендальф`,
+  fire() {
+    console.log(`Стреляю файрболлом!`);
   }
 };
 
-var getRandomNumber = function() {
+const getRandomNumber = () => {
   return Math.random();
-}
+};
 ```
 
-### Названия констант (постоянных значений) написаны прописными (заглавными) буквами
-Слова разделяются подчеркиваниями (`UPPER_SNAKE_CASE`), например:
- ```js
- var MAX_HEIGHT = 400;
- var EARTH_RADIUS = 6370;
- ```
+### Названия модулей записаны строчными (маленькими) буквами. Слова разделены дефисами
+Для того, чтобы избежать конфликтов имён в разных операционных системах, лучше применять наименее конфликтный способ именования файлов — строчными (маленькими) буквами через дефис
 
-### Конструкторы названы английскими существительными. Название конструкторов начинается с заглавной буквы
-Названия функций не являющихся конструкторами должны начинаться со строчной буквы
+
+## Форматирование и внешний вид
+
+### Неизменяемые значения объявлены через `const`
+При объявлении новых значений, предпочтение стоит отдавать использованию ключевого слова `const`. Использовать `let` нужно только в том случае, если значение будет перезаписано
 
 Неправильно:
 ```js
-var wizard = function (name, age) {
-  this.name = name;
-  this.age = age;
-};
-
-var Fly = function(coordinate) {
-  console.log('Смотрите я лечу!');
-};
+let a = 1;
+let b = 2;
+let sum = a + b;
 ```
 
 Правильно:
 ```js
-var Wizard = function (name, age) {
-  this.name = name;
-  this.age = age;
-};
+const a = 1;
+const b = 2;
+const sum = a + b;
 
-var fly = function(coordinate) {
-  console.log('Смотрите я лечу!');
-};
+for (let i = 0; i < 42; i++) {
+  console.log(i);
+}
 ```
- 
 
-## Форматирование и внешний вид
+Неправильно:
+```js
+let level = getLevel(this.state.level, this.quest);
+let answerNames = Object.keys(level.answers);
+let answers = answerNames.map((key) => ({key, value: level.answers[key]}));
+```
+Правильно:
+```js
+const level = getLevel(this.state.level, this.quest);
+const answerNames = Object.keys(level.answers);
+const answers = answerNames.map((key) => ({key, value: level.answers[key]}));
+```
 
 ### Используются обязательные блоки кода
 В любых конструкциях, где подразумевается использование блока кода (фигурных скобок), таких как `for`, `while`, `if`, `switch`, `function` — блок кода используется обязательно, даже если инструкция состоит из одной строчки
 
 Неправильно:
 ```js
-if (x % 2 === 1) return;
+(() => {
+  if (x % 2 === 1) return;
+})();
 ```
 
 Правильно:
 ```js
-if (x % 2 === 1) {
-  return;
-}
+(() => {
+  if (x % 2 === 1) {
+    return;
+  }
+})();
+```
+
+Исключения составляют однострочные стрелочные функции, которые можно использовать без обязательных блоков кода:
+```js
+const checkedCheckBoxes = checkboxes.filter((checkbox) => checkbox.checked);
 ```
 
 ### Список констант идёт перед основным кодом
 Все константы выносятся в начало модуля/файла
 
-### Код соответствует гайдлайнам (ESLint)
+### Код соответствует гайдлайнам <img src="https://eslint.org/img/logo.svg" width="24" alt="ESLint"/>
 - Отступы между операторами и ключевым словами соответствуют стайлгайду.
 - Для отступов используются одинаковые символы, вложенность кода обозначается отступами.
 - Однообразно расставлены пробелы перед, после и внутри скобок, операторов и ключевых слов
@@ -160,46 +243,89 @@ if (x % 2 === 1) {
 ---
 Не возникает ошибок при проверке проекта ESLint: `npm i && npm test`
 
+### Сложные составные константы собираются в перечисления `Enum`
+Множества однотипных констант собираются в перечисления.
+
+Неправильно:
+```js
+const EARTH_WEIGHT = 5.972 * Math.pow(10, 24);
+const EARTH_GRAVITY = 9.8;
+const EARTH_RADIUS = 6370;
+```
+
+Правильно:
+```js
+const Earth = {
+  WEIGHT: 5.972 * Math.pow(10, 24),
+  GRAVITY: 9.8,
+  RADIUS: 6370
+};
+```
+
+### Для итерирования по массивам и структурам данных по которому можно итерироваться (**Iterable**) используется конструкция `for .. of`
+Там где не требуется индекс элемента массива или нужно обойти все элементы итерируемой структуры данных, используется цикл `for .. of` вместо цикла `for`
+
+Неправильно:
+```js
+for (let i = 0; i < levels.length; i++) {
+  const level = levels[i];
+  renderLevel(level);
+}
+```
+
+Правильно:
+```js
+for (const level of levels) {
+  renderLevel(level);
+}
+```
+
+### Приватные поля в классах помечены
+Названия методов, которые есть в классе, но не предназначены для внешнего использования начинаются с нижнего подчёркивания `_`. Доступ к таким полям из вне класса запрещён
+
 
 ## Мусор
 
 ### В итоговом коде проекта находятся только те файлы, которые были на момент создания репозитория, которые были получены в патчах и файлы, созданные по заданию
 
 ### В коде проекта нет файлов, модулей и частей кода, которые не используются, включая, закомментированные участки кода
-Нет файлов скриптов, которые не подключены в файле `index.html`
+Нет файлов скриптов, которые являются «мёртвым кодом», который никогда не выполняется
+
+### Версии используемых зависимостей зафиксированы в `package.json`
+В списках зависимостей в файле `package.json` указаны точные версии используемых пакетов. Версия обязательно должна быть указана. Не допускается использование `^`, `*` и `~`
 
 ### В коде нет заранее недостижимых участков кода
 Например:
 - Невыполнимые условия:
 ```js
-var happen = false;
+const happen = false;
 if (happen) {
-  console.log('This will not happen anyway!');
+  console.log(`This will not happen anyway!`);
 }
 ```
 
-- Операции после выхода из функции:
+- Операции после выхода из функции <img src="https://eslint.org/img/logo.svg" width="16" alt="ESLint"/>: 
 ```js
-return;
-console.log('This will not happen!');
+(() => {
+  return;
+  console.log(`This will not happen!`);
+})();
 ```
 
 
 ## Корректность
 
-### Константы нигде в коде не переопределяются
-Константы используются только для чтения, и никогда не переопределяются на всем промежутке жизни программы
+### Константы и перечисления нигде в коде не переопределяются
+Константы и перечисления (`enum`) используются только для чтения, и никогда не переопределяются на всем промежутке жизни программы
 
-### Включен строгий режим (ESLint)
-В коде запрещены небезопасные конструкции. Код работает в [строгом режиме](https://developer.mozilla.org/ru/docs/Web/JavaScript/Reference/Strict_mode). В начале js-файлов установлена директива `'use strict';`
 
-### Используются строгие сравнения вместо нестрогих (ESLint)
+### Используются строгие сравнения вместо нестрогих <img src="https://eslint.org/img/logo.svg" width="24" alt="ESLint"/>
 Вместо операторов нестрогого сравнения `==` и `!=`, используются операторы строгого сравнения `===`, `!==`. [Таблицы истинности](http://dorey.github.io/JavaScript-Equality-Table/) для JavaScript
 
 Неправильно:
 ```js
-var foo = '';
-var bar = [];
+const foo = ``;
+const bar = [];
 if (foo == bar) {
   destroy(world);
 }
@@ -207,78 +333,147 @@ if (foo == bar) {
 
 Правильно:
 ```js
-var foo = '';
-var bar = [];
+const foo = ``;
+const bar = [];
 if (foo === bar) {
   destroy(world);
 }
 ```
 
-### В коде не используются зарезервированные слова в качестве имен переменных и свойств
+### В коде не используются зарезервированные слова в качестве имён переменных и свойств
 В названия переменных и свойств не включаются операторы и ключевые слова зарезервированные для будущих версий языка (например, `class`, `extends`).
 Список всех зарезервированных слов можно найти [тут](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Lexical_grammar#Keywords)   
 
+### Шаблоны созданные в коде программы корректны
+HTML-страница должна быть корректным **W3C** документом в любой момент работы программы. Т.о. шаблоны не должны конструировать некорректные HTML-фрагменты
 
-## Модульность
-
-### Все скрипты подключаются через файл `index.html`
-Файлы скриптов подключаются перед закрывающимся тегом `</body>`, атрибуты `async` и `defer` не используются
-
-### Все файлы JS представляют собой отдельные модули в [IIFE](https://google.com/iife) 
-Экспорт значений производится через глобальную область видимости. Код вне модуля запрещен. Вне модуля могут распологаться комментарии и утилитные инструкции, такие как `'use strict';`
-
-Пример правильного модуля:
-```js
-'use strict';
-(function (){
-window.load = function (url, onLoad) {
-  var xhr = new XMLHttpRequest();
-  xhr.addEventListener('load', onLoad);
-
-  xhr.responseType = 'json';
-  xhr.open('GET', url);
-  xhr.send();
-};
-})();
+Неправильно:
+```html
+<div class="player-wrapper" src="${answer.src}"></div>
 ```
 
-### Все значения, используемые только внутри модулей ограничены по видимости
-Из модуля ничего не должно попадать случайными образом в глобальную область видимости
+Правильно:
+```html
+<div class="player-wrapper" data-src="${answer.src}"></div>
+```
+
+### API встроенных функций и объектов используется правильно
+Передаются корректные значения, которые ожидаются по спецификации
 
 Неправильно:
 ```js
-'use strict';
+const isPressed = element.getAttribute(`aria-pressed`, false);
+```
+Правильно:
+```js
+const isPressed = element.getAttribute(`aria-pressed`);
+```
+Встроенные методы массивов используются по назначению.
 
-var ENTER_KEYCODE = 13;
-  
-(function () {
-  
-  var userIcon = document.querySelector('.user');
- 
-  userIcon.addEventListener('keydown', function (evt) {
-    if (evt.keyCode === ENTER_KEYCODE) {
-      popup.classList.remove('hidden');
-    }
-  });
-})();
+Неправильно:
+```js
+let greet = `Привет `;
+
+wizards.map((it) => {
+  greet += `, ${it.name}`;
+});
+
+console.log(`${greet}!`);
+```
+Правильно:
+```js
+const greet = `Привет `;
+
+const names = wizards.map((it) => it.name);
+
+console.log(`${greet} ${names.join(`, `)}!`);
+```
+
+### Отсутствуют потенциально некорректные операции
+Например, некорректное сложение двух операндов как строк. Проблема приоритета конкатенации над сложением. 
+
+Неправильно:
+```js
+new Date() + 1000;
 ```
 
 Правильно:
 ```js
-'use strict';
-
-(function () {
-  var ENTER_KEYCODE = 13;
-  
-  var userIcon = document.querySelector('.user');
- 
-  userIcon.addEventListener('keydown', function (evt) {
-    if (evt.keyCode === ENTER_KEYCODE) {
-      popup.classList.remove('hidden');
-    }
-  });
-})();
++new Date() + 1000;
 ```
+Некорректные проверки на существование с числами. 
+Пример некорректной проверки на то, что переменная является числом:
+```js
+const double = (value) => {
+  if (!value) {
+    return NaN;
+  }
+
+  return value * 2;
+};
+
+double(0);
+double();
+double(5);
+```
+
+Потенциально некорректная операция взятия целой части числа
+
+Неправильно:
+```js
+const minutesNumber = ~~(seconds / 60);
+```
+
+Правильно:
+```js
+const minutesNumber = Math.trunc(seconds / 60);
+```
+
+
+## Модульность
+
+### Все файлы JS представляют собой отдельные модули [ES2015](http://exploringjs.com/es6/ch_modules.html)
+Экспорт и импорт значений производится через при помощи ключевых слов `export` и `import`. Сохранение в глобальную область видимости значений не допускается
+
+Пример правильного модуля:
+```js
+import {changeView} from '../util';
+import WelcomeView from './welcome-view';
+import App from '../main';
+
+
+export default class Welcome {
+  constructor() {
+    this.view = new WelcomeView();
+  }
+
+  init() {
+    changeView(this.view);
+
+    this.view.onStart = () => {
+      App.showGame();
+    };
+  }
+}
+```
+
+### Модули не экспортируют изменяющиеся переменные
+Модуль не должен экспортировать переменную значение которой может измениться в будущем
+Неправильно:
+```js
+export let latestResult;
+```
+
+Правильно:
+```js
+export const latestResult = loadLatestResult();
+```
+
+### Название модуля соответствует его содержимому
+Разные логические части кода вынесены в отдельные файлы модулей.
+Имя модуля должно соответствовать его содержимому. Например, если в модуле лежит класс `GameView`, то и имя модуля должно быть `game-view.js`
+
+### Из одного модуля экспортируется не больше одного класса. Класс всегда экспортируется как `default`
 
 
 ## Универсальность
@@ -299,13 +494,13 @@ IE не поддерживается, только Edge.
 ### Нельзя пользоваться глобальной переменной `event`
 Приводит к неосознанному коду:
 ```js
-var elem = document.querySelector('.test');
+const elem = document.querySelector(`.test`);
 
-var onElemClick = function () {
-  event.target.innerText = 'you really need event';
+const onElemClick = () => {
+  event.target.innerText = `you really need event`;
 };
 
-elem.addEventListener('click', oneElemClick);
+elem.addEventListener(`click`, oneElemClick);
 ```
 
 ## Оптимальность
@@ -313,7 +508,7 @@ elem.addEventListener('click', oneElemClick);
 ### Своевременный выход из цикла: цикл не работает дольше чем нужно
 Неправильно:
 ```js
-apartments.forEach(function (it, index) {
+apartments.forEach((it, index) => {
   if (index < 3) {
     render(it);
   }
@@ -321,10 +516,23 @@ apartments.forEach(function (it, index) {
 ```
 
 Правильно:
-```javascript
-for (var i = 0; i < Math.min(apartments.length, 3); i++) {
+```js
+for (let i = 0; i < Math.min(apartments.length, 3); i++) {
   render(apartments[i]);
 }
+```
+
+### Внутри шаблонов-строк (template literals) не используется конкатенация строк
+Конкатенация строк в шаблонных строках является антипаттерном, т.к. ухудшает читаемость шаблонной строки
+
+Неправильно:
+```js
+const page = `${header + `\n` + main + `\n` + footer}`;
+```
+
+Правильно:
+```js
+const page = `${header}\n${main}\n${footer}`;
 ```
 
 ### Количество вызовов циклов минимизировано
@@ -332,18 +540,14 @@ for (var i = 0; i < Math.min(apartments.length, 3); i++) {
 
 Неправильно:
 ```js
-var wizardNames = source.map(function (it) {
-    return it.wizard;
-  }).map(function (it) {
-    return it.name; 
-  });
+const wizardNames = source.
+    map((it) => it.wizard).
+    map((it) => it.name);
 ```
 
 Правильно:
 ```js
-var wizardNames = source.map(function (it) {
-    return it.wizard.name;
-  });
+const wizardNames = source.map((it) => it.wizard.name);
 ```
 
 ### Множественные DOM-операции производятся на элементах, которые не добавлены в DOM 
@@ -359,7 +563,7 @@ var wizardNames = source.map(function (it) {
 Кол-во обработчиков подвешенных на глобальную область видимости не должно возрастать. Например, если подвешивается обработчик, который следит за перемещением курсора по экрану, то он должен подвешиваться и отвешиваться в нужный момент. В случае если обработчик на `document` только подвешивается это может свидетельствовать о проблеме бесконечного создания обработчиков и потенциальной утечке памяти.
 
 **Защита от неправильного поведения интерфейса**
- Например, на странице может существовать попап, который скрывается по `ESC`. Лучше для него гасить обработчик, если он не показан, потому что он может каким-то образом ломать поведение сайта — останавливать распространение, отменять дефолтное поведение и т.д. Поэтому поведение должно быть **явным** — если в этот момент времени обработчики не нужны, их нужно удалить. Явное и предсказуемое поведение.
+ Например, на странице может существовать попап, который скрывается по `ESC`. Лучше для него гасить обработчик, если он не показан, потому что он может каким-то образом ломать поведение сайта — останавливать распространение, отменять поведение по умолчанию и т.д. Поэтому поведение должно быть **явным** — если в этот момент времени обработчики не нужны, их нужно удалить. Явное и предсказуемое поведение.
 
 ### Запрещено использовать `innerHTML` и подобные ему свойства и методы для вставки пользовательских строк (имён, фамилий и т.д.)
 Защита от XSS-атак, а также изменения исходных данных, запутывание пользователя и прочее
@@ -375,90 +579,98 @@ var wizardNames = source.map(function (it) {
 
 Неправильно:
 ```js
-var keks = {
-  name: 'Кекс'
-}
+const keks = {
+  name: `Кекс`
+};
 ```
 
 Правильно:
 ```js
-var cat = {
-  name: 'Кекс'
-}
+const cat = {
+  name: `Кекс`
+};
 ```
 
 ### Название методов и свойств объектов не содержит название объектов 
 Неправильно:
 ```js
-popup.openPopup = function() {
-  console.log('I will open popup');
+const popup = {
+  openPopup() {
+    console.log(`I will open popup`);
+  }
 };
-wizard.wizardName = 'Пендальф';
+
+class Wizard {
+  constructor(name = `Пендальф`) {
+    this.wizardName = name;
+  }
+}
 ```
 
 Правильно
 ```js
-popup.open = function() {
-  console.log('I will open popup');
+const popup = {
+  open() {
+    console.log(`I will open popup`);
+  }
 };
-wizard.name = 'Пендальф';
+
+class Wizard {
+  constructor(name = `Пендальф`) {
+    this.name = name;
+  }
+}
 ```
 
-### Из названия обработчика события и функции-коллбэка следует, что это обработчик
+### Из названия обработчика события и функции-коллбэка следует, что это за обработчик
 Для единственного обработчика или функции можно использовать `callback` или `cb`. Для именования нескольких обработчиков внутри одного модуля используется `on` или `handler` и описание события. Название обработчика строится следующим образом:
  - `on` + (на каком элементе) + что случилось:
  
 ```js
- var onSidebarClick;
- var onContentLoad;
- 
- var onResize;
+const onSidebarClick = () => {};
+const onContentLoad = () => {};
+
+const onResize = () => {};
 ```
  - (на каком элементе) + что случилось + `Handler`:
  
 ```js
- var sidebarClickHandler;
- var contentLoadHandler;
- 
- var resizeHandler;
+const sidebarClickHandler = () => {};
+const contentLoadHandler = () => {};
+
+const resizeHandler = () => {};
 ```
 
 
 ## Единообразие
 
 ### Все функции объявлены единообразно
-Все функции создаются в едином стиле: используется либо [«функциональное выражение»](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/function), либо как [«функциональное объявление»](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/function). Смешение стилей в рамках проекта не допускается
+При объявлении функций используются только стрелочные функции. Для объявления методов объектов используется специальный синтаксис для методов. Для объявления классов используется ключевое слово `class`.
+ Смешение стилей в рамках проекта не допускается
 
-Неправильно:
+Функция:
 ```js
-var doSomethingElse = function () {
-    // function body
-};
-
-function doSomething() {
-  // function body
-}
-```
-
-Правильно:
-```js
-var doSomething = function () {
-    // function body
-};
-
-var doSomethingElse = function () {
-    // function body
+const getTheMeaningOfLive = () => {
+  return 42;
 };
 ```
 
-или
+Метод:
 ```js
-function doSomething() {
-  // function body
-}
+const GOD = {
+  createWorld() {
+    return `Your world is ready!`;
+  }
+};
+```
 
-function doSomethingElse() {
-  // function body
+Конструктор
+```js
+class Planet {
+  constructor(weight, mass) {
+    this.weight = weight;
+    this.mass = mass;
+  }
 }
 ```
 
@@ -469,16 +681,16 @@ function doSomethingElse() {
 
 Неправильно:
 ```js
-var popupMainElement = document.querySelector('.popup');
-var sidebarNode = document.querySelector('.sidebar');
-var similarContainer = popupMainElement.querySelector('ul.similar');
+const popupMainElement = document.querySelector(`.popup`);
+const sidebarNode = document.querySelector(`.sidebar`);
+const similarContainer = popupMainElement.querySelector(`ul.similar`);
 ```
 
 Правильно:
 ```js
-var popupMainElement = document.querySelector('.popup');
-var sidebarElement = document.querySelector('.sidebar');
-var similarContainerElement = popupMainElement.querySelector('ul.similar');
+const popupMainElement = document.querySelector(`.popup`);
+const sidebarElement = document.querySelector(`.sidebar`);
+const similarContainerElement = popupMainElement.querySelector(`ul.similar`);
 ```
 
 ### При использовании встроенного API, который поддерживает несколько вариантов использования, используется один способ
@@ -486,211 +698,119 @@ var similarContainerElement = popupMainElement.querySelector('ul.similar');
 
 Неправильно:
 ```js
-var popupMainElement = document.querySelector('#popup');
-var sidebarElement = document.getElementById('sidebar');
+const popupMainElement = document.querySelector(`#popup`);
+const sidebarElement = document.getElementById(`sidebar`);
 
-var popupClassName = popupMainElement.getAttribute('class');
-var sidebarClassName = sidebarElement.className;
+const popupClassName = popupMainElement.getAttribute(`class`);
+const sidebarClassName = sidebarElement.className;
 ```
 
 Правильно:
 ```js
-var popupMainElement = document.querySelector('#popup');
-var sidebarElement = document.querySelector('#sidebar');
+const popupMainElement = document.querySelector(`#popup`);
+const sidebarElement = document.querySelector(`#sidebar`);
 ```
 
 ```js
-var popupClassName = popupMainElement.getAttribute('class');
-var sidebarClassName = sidebarElement.getAttribute('class');
+const popupClassName = popupMainElement.getAttribute(`class`);
+const sidebarClassName = sidebarElement.getAttribute(`class`);
 
 ```
 
 или
 
 ```js
-var popupMainElement = document.getElementById('popup');
-var sidebarElement = document.getElementById('sidebar');
+const popupMainElement = document.getElementById(`popup`);
+const sidebarElement = document.getElementById(`sidebar`);
 ```
 
 ```js
-var popupClassName = popupMainElement.className;
-var sidebarClassName = sidebarElement.className;
+const popupClassName = popupMainElement.className;
+const sidebarClassName = sidebarElement.className;
 
 ```
 
+### Методы внутри классов упорядочены
+Во всех классах методы упорядочены следующим образом:
 
-## Корректность
+1. Конструктор
+2. Геттеры/сеттеры свойств объекта
+3. Основные методы объекта:
+  - Методы объекта
+  - Приватные методы
+  - Перегруженные методы родительских объектов
+4. Обработчики событий
+5. Статические методы
 
-### API встроенных функций и объектов используется правильно
-Передаются корректные значения, которые ожидаются по спецификации
-
-Неправильно:
-```js
-var isPressed = element.getAttribute('aria-pressed', false);
-```
-Правильно:
-```js
-var isPressed = element.getAttribute('aria-pressed');
-```
-Встроенные методы массивов используются по назаначению.
-
-Неправильно:
-```js
-var greet = 'Привет ';
-
-wizards.map(function (it) {
-  greet += ', ' + it.name;
-});
-
-console.log(greet + '!');
-```
-Правильно:
-```js
-var greet = 'Привет ';
-
-var names = wizards.map(function (it) {
-  return it.name;
-});
-
-console.log(greet + names.join(', ') + '!');
-```
-
-### Отсутствуют потенциально некорректные операции
-Например некорректное сложение двух операндов как строк. Проблема приоритета конкатенации над сложением. 
-
-Неправильно:
-```js
-new Date() + 1000;
-```
-Правильно:
-```js
-+new Date() + 1000;
-```
-Некорректные проверки на существование с числами. 
-Пример некорректной проверки на то, что переменная является числом:
-```js
-var double = function (value) {
-  if(!value) {
-    return NaN;
-  }
-  
-  return value * 2;
-};
-
-double(0);
-double();
-double(5);
-```
+Сортировка основных методов объекта свободная, подразумевается что методы будут расположены оптимально для конкретного класса нет смысла ограничивать порядок, потому что он может меняться в зависимости от особенностей объекта.
 
 
 ## Модульность
 
 ### В случае, если одинаковый код повторяется в нескольких модулях, повторяющаяся часть вынесена в отдельный модуль
-Критерий касается структурных единиц кода — повторяющийся блок кода, либо функции с одним и теми же конструкциями, например, утилитные методы для проверки клавиш:
+Критерий касается структурных единиц кода — повторяющийся блок кода, либо функции с одним и теми же конструкциями, например, утилитные методы для работы с DOM:
 ```js
-// Файл keyboard.js
-'use strict';
+export const createElement = (template) => {
+  const outer = document.createElement(`div`);
+  outer.innerHTML = template;
+  return outer;
+};
 
-(function () {
-  var ENTER_KEYCODE = 13;
-  var ESC_KEYCODE = 27;
-  
-  window.keyboard = {
-    isKeyBoardEvent: function (evt) {
-      return evt instanceof KeyboardEvent;
-    },
-    isEnterPressed: function (evt) {
-      return evt.keyCode === ENTER_KEYCODE;
-    },
-    isEscPressed: function (evt) {
-      return evt.keyCode === ESC_KEYCODE;
-    }
-  }
-})();
+const main = document.getElementById(`main`);
+
+export const changeView = (view) => {
+  main.innerHTML = ``;
+  main.appendChild(view.element);
+};
 ```
-**Не стоит выносить в отдельный модуль одну повторяющуюся интсрукцию**:
+**Не стоит выносить в отдельный модуль одну повторяющуюся инструкцию**:
 ```js
-// Файл hide-gallery.js
-'use strict';
-
-(function () {
-  window.hideGallery = function (gallery) {
-    return gallery.classList.add('invisible');
-  }
-})();
-```
-
-### При экспорте из одного модуля нескольких значений используется пространство имен
-Множественные значения записываются в один объект. Имя объекта совпадает с именем файла без учета кейса.
-Неправильно:
-```js
-// Файл dialog-util.js
-'use strict';
-
-(function () {
-  var ENTER_KEYCODE = 13;
-  var ESC_KEYCODE = 27;
-  
-  window.isEnterPressed = function (evt) {
-    return evt.keyCode === ENTER_KEYCODE;
-  };
-  
-  window.isEscPressed = function (evt) {
-    return evt.keyCode === ESC_KEYCODE;
-  };
-})();
-```
-Правильно:
-```js
-// Файл dialog-util.js
-'use strict';
-
-(function () {
-  var ENTER_KEYCODE = 13;
-  var ESC_KEYCODE = 27;
-  
-  window.dialogUtil = {
-    isEnterPressed: function (evt) {
-      return evt.keyCode === ENTER_KEYCODE;
-    },
-    isEscPressed: function (evt) {
-      return evt.keyCode === ESC_KEYCODE;
-    }
-  }
-})();
-```
-
-### Во всех модулях для ограничения области видимости используются IIFE и только они
-Неправильно:
-```js
-'use strict';
-
-window.load = function (url, onLoad) {
-  var xhr = new XMLHttpRequest();
-  xhr.addEventListener('load', onLoad);
-
-  xhr.responseType = 'json';
-  xhr.open('GET', url);
-  xhr.send();
+export const createElement = (template) => {
+  const outer = document.createElement(`div`);
+  outer.innerHTML = template;
+  return outer;
 };
 ```
 
-Правильно:
+
+## Корректность
+
+### Методы, которые не используют поля класса объявлены как статические
+Если метод не использует поля класса в котором он объявлен, то этот метод должен быть объявлен как статический:
+
+Неправильно:
 ```js
-'use strict';
+class App {
+  showWelcome() {
+    location.hash = ControllerID.WELCOME;
+  }
 
-(function() {
-  window.load = function (url, onLoad) {
-    var xhr = new XMLHttpRequest();
-    xhr.addEventListener('load', onLoad);
+  showGame() {
+    location.hash = ControllerID.GAME;
+  }
 
-    xhr.responseType = 'json';
-    xhr.open('GET', url);
-    xhr.send();
-  };
-})();
+  showScores() {
+    location.hash = ControllerID.SCOREBOARD;
+  }
+}
 ```
 
+Правильно:
+```js
+class App {
+  static showWelcome() {
+    location.hash = ControllerID.WELCOME;
+  }
+
+  static showGame() {
+    location.hash = ControllerID.GAME;
+  }
+
+  static showScores() {
+    location.hash = ControllerID.SCOREBOARD;
+  }
+}
+```
 
 ## Избыточность
 
@@ -699,9 +819,9 @@ window.load = function (url, onLoad) {
 
 Неправильно:
 ```js
-var isPositiveNumber = function (myNumber) {
-  if (typeof myNumber === 'undefined') {
-    throw new Error('Parameter is not defined');
+const isPositiveNumber = (myNumber) => {
+  if (typeof myNumber === `undefined`) {
+    throw new Error(`Parameter is not defined`);
   }
   return myNumber > 0;
 };
@@ -712,7 +832,7 @@ isPositiveNumber(-30);
 
 Правильно:
 ```js
-var isPositiveNumber = function (myNumber) {
+const isPositiveNumber = (myNumber) => {
   return myNumber > 0;
 };
 
@@ -720,26 +840,59 @@ isPositiveNumber(15);
 isPositiveNumber(-30);
 ```
 
-### Отсутствует дублирование кода: повторяющиеся части кода переписаны как функции
+### Отсутствует дублирование кода: повторяющиеся части кода переписаны как функции или вынесены из условий
 При написании кода следует придерживаться принципа [DRY](https://ru.wikipedia.org/wiki/Don%E2%80%99t_repeat_yourself)
 
-### Если при использовании условного оператора в любом случае возвращается значение, альтернативная ветка опускается
 Неправильно:
 ```js
-if (2 > 1) {
-  return val;
-} else {
-  return anotherVal;
+if (this.level >= 10) {
+  this.timer.stopTimer();
+  this.timer.stopTimeout();
+  this.setResult();
+  removeTimer();
+} else if (this.lives <= 0) {
+  this.timer.stopTimer();
+  this.timer.stopTimeout();
+  app.showResultFail();
+  removeTimer();
 }
 ```
 
 Правильно:
 ```js
-if (2 > 1) {
-  return val;
+this.timer.stopTimer();
+this.timer.stopTimeout();
+
+if (this.level >= 10) {
+  this.setResult();
+} else if (this.lives <= 0) {
+  app.showResultFail();
 }
 
-return anotherVal;
+removeTimer();
+```
+
+### Если при использовании условного оператора в любом случае возвращается значение, альтернативная ветка опускается
+Неправильно:
+```js
+((val, anotherVal) => {
+  if (2 > 1) {
+    return val;
+  } else {
+    return anotherVal;
+  }
+});
+```
+
+Правильно:
+```js
+((val, anotherVal) => {
+  if (2 > 1) {
+    return val;
+  }
+
+  return anotherVal;
+});
 ```
 
 ### Отсутствуют лишние приведения и проверки типов
@@ -748,30 +901,30 @@ return anotherVal;
 Неправильно:
 ```js
 if (booleanValue === true) {
-  console.log('It\'s true!');
+  console.log(`It\`s true!`);
 }
 ```
 
 Правильно:
 ```js
 if (booleanValue) {
-  console.log('It\'s true!');
+  console.log(`It\`s true!`);
 }
 ```
 
 ### Там где возможно, в присвоении значения вместо if используется тернарный оператор
 Неправильно:
 ```js
-var sex;
+let sex;
 if (male) { 
-  sex = 'Мужчина';
+  sex = `Мужчина`;
 } else { 
-  sex = 'Женщина';
+  sex = `Женщина`;
 }
 ```
 Правильно:
 ```js
-var sex = male ? 'Мужчина' : 'Женщина';
+const sex = male ? `Мужчина` : `Женщина`;
 ```
  
 ### Условия упрощены
@@ -779,15 +932,19 @@ var sex = male ? 'Мужчина' : 'Женщина';
 
 Неправильно:
 ```js
-if (firstValue === secondValue) {
-  return true;
-} else {
-  return false;
-}
+((firstValue, secondValue) => {
+  if (firstValue === secondValue) {
+    return true;
+  } else {
+    return false;
+  }
+});
 ```
 Правильно:
 ```js
-return firstValue === secondValue;
+((firstValue, secondValue) => {
+  return firstValue === secondValue;
+});
 ```
 
 
@@ -798,23 +955,67 @@ return firstValue === secondValue;
 
 ## Оптимальность
 
+### Значения не конвертируются в строку и обратно без необходимости
+Если состояние переменной можно сохранить в переменную или во внутренне свойство, то лучше использовать внутреннее состояние объекта, вместо сериализации из значения в строку и наоборот
+
+Неправильно:
+```js
+class Timer {
+  setTime({minutes, seconds}) {
+    document.querySelector(`.timer-value-mins`).textContent = minutes;
+    document.querySelector(`.timer-value-secs`).textContent = seconds;
+  }
+  getTime() {
+    const minutes = parseInt(document.querySelector(`.timer-value-mins`).textContent, 10);
+    const seconds = parseInt(document.querySelector(`.timer-value-secs`).textContent, 10);
+  
+    return {minutes, seconds};
+  }
+}
+```
+
+Правильно:
+```js
+class Timer {
+  constructor(time) {
+    this.minutesEl = document.querySelector(`.timer-value-mins`);
+    this.secondsEl = document.querySelector(`.timer-value-secs`);
+    this.time = time;
+  }
+  
+  update() {
+    this.minutesEl.textContent = this.time.minutes;
+    this.secondsEl.textContent = this.time.seconds;
+  }
+  
+  get time() {
+    return this.myTime;
+  }
+  
+  set time(time) {
+    this.myTime = time;
+    this.update();
+  }
+}
+```
+
 ### Константы, используемые внутри функций создаются вне функций и используются повторно через замыкания
 
 ### Поиск элементов по селекторам делается минимальное количество раз, после этого ссылки на элементы сохраняются
 
 Неправильно:
 ```js
-for (var i = 0; i < Math.min(apartments.length, 3); i++) {
-  var dialog = document.querySelector('.dialog');
+for (let i = 0; i < Math.min(apartments.length, 3); i++) {
+  const dialog = document.querySelector(`.dialog`);
   render(dialog, apartments[i]);
 }
 ```
 
 Правильно:
 ```javascript
-var dialog = document.querySelector('.dialog');
+const dialog = document.querySelector(`.dialog`);
 
-for (var i = 0; i < Math.min(apartments.length, 3); i++) {
+for (let i = 0; i < Math.min(apartments.length, 3); i++) {
   render(dialog, apartments[i]);
 }
 ```
@@ -826,20 +1027,20 @@ for (var i = 0; i < Math.min(apartments.length, 3); i++) {
 
 Неправильно:
 ```js
-var imageContainer = document.querySelector('.image-container');
+const imageContainer = document.querySelector(`.image-container`);
 
-var changeFilter = function (filterName) {
-  imageContainer.classList.remove('filter-chrome', 'filter-sepia', 'filter-marvin', 'filter-phobos', 'filter-heat');
+const changeFilter = (filterName) => {
+  imageContainer.classList.remove(`filter-chrome`, `filter-sepia`, `filter-marvin`, `filter-phobos`, `filter-heat`);
   imageContainer.classList.add(filterName);
 };
 ```
 
 Правильно:
 ```js
-var imageContainer = document.querySelector('.image-container');
+const imageContainer = document.querySelector(`.image-container`);
 
-var currentFilter;
-var changeFilter = function (filterName) {
+let currentFilter;
+const changeFilter = (filterName) => {
   if (currentFilter) {
     imageContainer.classList.remove(currentFilter);
   }
@@ -857,14 +1058,14 @@ var changeFilter = function (filterName) {
 ### Длинные функции и методы разбиты на несколько небольших
 
 ### Для работы с JS-коллекциями используются итераторы для массивов
-Итераторы используются для трансфорамаций массивов — `map`, `filter`, `sort` и прочие. А также для обхода проблемы потери окружения в циклах — `forEach`
+Итераторы используются для трансформаций массивов — `map`, `filter`, `sort` и прочие. А также для обхода проблемы потери окружения в циклах — `forEach`
 
 Например:
 ```js
-elements.forEach(function (el) {
-  el.onclick = function () {
+elements.forEach((el) => {
+  el.onclick = () => {
     console.log(el);
-  }
+  };
 });
 ```
 
@@ -878,4 +1079,47 @@ imgGenerate(picArray = JSON.parse(data));
 ```js
 picArray = JSON.parse(data);
 imgGenerate(picArray);
+```
+
+### Операции над DOM-элементами инкапсулированы
+Все операции над элементами DOM-дерева происходят только там, где эти элементы были созданы и не используются снаружи. Например, всё что связано с отрисовкой данных должно находиться внутри класса `View` и управляться только внутри этого класса, любой доступ к закрытым данным снаружи запрещён
+
+Неправильно:
+```js
+class PlayerController {
+  constructor(view) {
+    this.view = view;
+  }
+  
+  init() {
+    const checkboxes = Array.from(this.view.element.querySelectorAll(`input`));
+    
+    const answers = [];
+  
+    this.view.makeDecision = () => {  
+      answers.push(checkboxes.filter((it) => it.checked));
+      
+      if (answers.length > 0) {
+        goToNextScreen();
+      }
+    };
+  }
+}
+```
+
+Правильно:
+```js
+class PlayerController {
+  constructor(view) {
+    this.view = view;
+  }
+  
+  init() {
+    this.view.onAnswer = (answers) => {  
+      if (answers.length > 0) {
+        goToNextScreen();
+      }
+    };
+  }
+}
 ```
