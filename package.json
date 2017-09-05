@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "description": "This repository is about criterias from Advanced JavaScript course of [HTML Academy](https://htmlacademy.ru/intensive/ecmascript)",
   "scripts": {
-    "spellcheck": "yaspeller index.md -l en,ru",
+    "spellcheck": "yaspeller index.md -l en,ru --check-yo",
     "test": "eslint --ext md index.md && npm run spellcheck"
   },
   "keywords": [],
