@@ -3,7 +3,8 @@
   "version": "1.0.0",
   "description": "This repository is about criterias from Advanced JavaScript course of [HTML Academy](https://htmlacademy.ru/intensive/ecmascript)",
   "scripts": {
-    "test": "eslint --ext md index.md"
+    "spellcheck": "yaspeller index.md -l en,ru",
+    "test": "eslint --ext md index.md && npm run spellcheck"
   },
   "keywords": [],
   "author": "",
@@ -11,6 +12,7 @@
   "devDependencies": {
     "eslint": "4.2.0",
     "eslint-config-htmlacademy": "0.3.0",
-    "eslint-plugin-markdown": "1.0.0-beta.6"
+    "eslint-plugin-markdown": "1.0.0-beta.6",
+    "yaspeller": "^3.3.0"
   }
 }
