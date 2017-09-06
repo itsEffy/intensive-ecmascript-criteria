@@ -1,7 +1,7 @@
 lang: "ru"
 
-githubUrl: "https://github.com/htmlacademy/intensive-javascript-criteria"
-issuesUrl: "https://github.com/htmlacademy/intensive-javascript-criteria/issues"
-pullsUrl: "https://github.com/htmlacademy/intensive-javascript-criteria/pulls"
+githubUrl: "https://github.com/htmlacademy/intensive-ecmascript-criteria"
+issuesUrl: "https://github.com/htmlacademy/intensive-ecmascript-criteria/issues"
+pullsUrl: "https://github.com/htmlacademy/intensive-ecmascript-criteria/pulls"
 
 theme: minima
