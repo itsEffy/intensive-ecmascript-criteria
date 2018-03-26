@@ -570,13 +570,13 @@ const wizardNames = source.map((it) => it.wizard.name);
 
 Неправильно: через `innerHTML` вставляются данные, которые невозможно полностью контролировать. Это может быть пользовательский ввод, который может содержать XSS.
 ```js
-var listItem = listItemTemplate.cloneNode(true);
-listItem.querySelector('.title').innerHTML = user.fullName;
+const listItem = listItemTemplate.cloneNode(true);
+listItem.querySelector(`.title`).innerHTML = user.fullName;
 ```
 
 Правильно: через `innerHTML` вставляется код, который был создан программистом, поэтому сделать его вредоносным невозможно. `innerHTML` используется для лаконичного создания сложной разметки, но при этом в разметку не вставляются никакие внешние данные.
 ```js
-var listItemTemplate = '<li class="amenity><i></i><a href="#"></a></li>';
+const listItemTemplate = `<li class="amenity><i></i><a href="#"></a></li>`;
 list.innerHTML = listItemTemplate;
 ```
 
